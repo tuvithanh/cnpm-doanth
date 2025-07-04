@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_trangchu"
+        android:title="Trang chủ" />
+    <item
+        android:id="@+id/nav_taikhoan"
+        android:title="Tài khoản" />
+    <item
+        android:id="@+id/nav_sanpham"
+        android:title="Sản phẩm" />
+    <item
+        android:id="@+id/nav_logout"
+        android:title="Đăng xuất" />
+</menu>
