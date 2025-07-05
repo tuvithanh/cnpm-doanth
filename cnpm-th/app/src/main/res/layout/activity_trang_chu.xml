@@ -6,29 +6,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Main content -->
+    <!-- Nội dung chính của màn hình -->
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <!-- Custom Toolbar -->
+        <!-- Toolbar -->
         <include layout="@layout/toolbar" />
 
-        <!-- Page content -->
-        <FrameLayout
-            android:id="@+id/mainContent"
+        <!-- Danh sách danh mục + sản phẩm -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerCategoryProduct"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="8dp"
+            android:clipToPadding="false" />
     </LinearLayout>
 
-    <!-- Navigation Drawer -->
+    <!-- Menu Navigation Drawer -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:menu="@menu/drawer_menu"
-        android:background="@android:color/white" />
-
+        android:background="@android:color/white"
+        app:menu="@menu/drawer_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>

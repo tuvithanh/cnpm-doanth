@@ -1,14 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/nav_trangchu"
-        android:title="Trang chủ" />
-    <item
-        android:id="@+id/nav_taikhoan"
-        android:title="Tài khoản" />
-    <item
-        android:id="@+id/nav_sanpham"
-        android:title="Sản phẩm" />
-    <item
-        android:id="@+id/nav_logout"
-        android:title="Đăng xuất" />
+
+    <!-- Nhóm các menu chính -->
+    <group android:id="@+id/group_main">
+        <item
+            android:id="@+id/nav_trangchu"
+            android:title="Trang chủ" />
+        <item
+            android:id="@+id/nav_taikhoan"
+            android:title="Tài khoản" />
+        <item
+            android:id="@+id/nav_sanpham"
+            android:title="Sản phẩm" />
+    </group>
+    <group android:id="@+id/group_main">
+        ...
+        <item android:id="@+id/nav_qlcategory" android:title="Quản lý category" />
+        <item android:id="@+id/nav_product" android:title="Quản lý sản phẩm" />
+        <item android:id="@+id/nav_qluser" android:title="Quản lý Users" />
+    </group>
+
+    <!-- Divider tự động -->
+
+    <!-- Nhóm chứa Đăng xuất -->
+    <group android:id="@+id/group_logout">
+        <item
+            android:id="@+id/nav_logout"
+            android:title="Đăng xuất" />
+    </group>
+
 </menu>

@@ -1,25 +1,19 @@
 package com.example.cnpm_thuchanh.View;
 
-import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.cnpm_thuchanh.R;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.cnpm_thuchanh.Dao.UserDao;
+import com.example.cnpm_thuchanh.Model.User;
+import com.example.cnpm_thuchanh.R;
 import com.example.cnpm_thuchanh.Session.UserSession;
-
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.widget.CheckBox;
-
-import android.content.SharedPreferences;
-import android.widget.CheckBox;
 
 public class LoginActivity extends AppCompatActivity {
     EditText edtUsername, edtPassword;
@@ -49,19 +43,23 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         btnLogin.setOnClickListener(v -> {
-            String username = edtUsername.getText().toString();
-            String password = edtPassword.getText().toString();
+            String username = edtUsername.getText().toString().trim();
+            String password = edtPassword.getText().toString().trim();
 
             if (userDao.login(username, password)) {
-                new UserSession(this).saveUsername(username);
+                // ✅ Lấy user từ DB để lưu session đầy đủ
+                User user = userDao.getUserByUsername(username);
+                if (user != null) {
+                    new UserSession(this).saveUserInfo(user.getId(), user.getUsername(), user.getRole());
+                }
 
-                // 👉 Ghi nhớ username nếu có tick
+                // ✅ Ghi nhớ username nếu có tick
                 SharedPreferences.Editor editor = prefs.edit();
                 if (chkRemember.isChecked()) {
                     editor.putString("username", username);
                     editor.putBoolean("remember_username", true);
                 } else {
-                    editor.clear(); // Xoá nếu không nhớ nữa
+                    editor.clear();
                 }
                 editor.apply();
 
@@ -77,5 +75,3 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 }
-
-

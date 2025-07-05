@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"> <!-- Thêm dòng này -->
+
+    <item
+        android:id="@+id/menu_cart"
+        android:title="Giỏ hàng"
+        android:icon="@drawable/baseline_add_shopping_cart_24"
+        app:showAsAction="always" /> <!-- Dùng app:showAsAction chứ không phải android:showAsAction -->
+
+</menu>

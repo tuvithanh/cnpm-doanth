@@ -1,13 +1,15 @@
 package com.example.cnpm_thuchanh.Model;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private int id;
     private int cateId;
     private String name;
     private String description;
     private double price;
     private String imagePath;
-
+    public  Product(){};
     public Product(int id, int cateId, String name, String description, double price, String imagePath) {
         this.id = id;
         this.cateId = cateId;

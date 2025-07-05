@@ -1,5 +1,7 @@
 package com.example.cnpm_thuchanh.Adapter;
 
+
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,42 +11,41 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.cnpm_thuchanh.Model.Product;
 import com.example.cnpm_thuchanh.R;
+import com.example.cnpm_thuchanh.View.ProductDetailActivity;
 
 import java.io.File;
 import java.util.List;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
+public class ProductHomeAdapter extends RecyclerView.Adapter<ProductHomeAdapter.ProductViewHolder> {
 
-    private List<Product> list;
-    private OnItemClickListener clickListener;
+    private List<Product> productList;
 
-    public interface OnItemClickListener {
-        void onItemClick(Product product, View view);
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.clickListener = listener;
-    }
-
-    public ProductAdapter(List<Product> list) {
-        this.list = list;
+    public ProductHomeAdapter(List<Product> productList) {
+        this.productList = productList;
     }
 
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product, parent, false);
-        return new ProductViewHolder(v);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_product_home, parent, false);
+        return new ProductViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        Product p = list.get(position);
+        Product p = productList.get(position);
         holder.txtName.setText(p.getName());
-        holder.txtPrice.setText(String.format("%.0f VNĐ", p.getPrice()));
         holder.txtDesc.setText(p.getDescription());
+        holder.txtPrice.setText(String.format("%.0f VNĐ", p.getPrice()));
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), ProductDetailActivity.class);
+            intent.putExtra("product", p);
+            v.getContext().startActivity(intent);
+        });
 
         File imgFile = new File(p.getImagePath());
         if (imgFile.exists()) {
@@ -53,31 +54,25 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             holder.imgProduct.setImageResource(R.drawable.ic_image_placeholder);
         }
 
-        // 👇 Click để hiện PopupMenu ngay dưới item
-        holder.itemView.setOnClickListener(v -> {
-            if (clickListener != null) {
-                clickListener.onItemClick(p, v);
-            }
-        });
+        // Bạn có thể thêm click nếu muốn
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return productList.size();
     }
 
     static class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView txtName, txtDesc, txtPrice;
         ImageView imgProduct;
+        TextView txtName, txtDesc, txtPrice;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
+            imgProduct = itemView.findViewById(R.id.imgProduct);
             txtName = itemView.findViewById(R.id.txtProductName);
             txtDesc = itemView.findViewById(R.id.txtProductDesc);
             txtPrice = itemView.findViewById(R.id.txtProductPrice);
-            imgProduct = itemView.findViewById(R.id.imgProduct);
         }
     }
 }
-
 

@@ -13,6 +13,27 @@
         android:theme="@style/Theme.Cnpmthuchanh"
         tools:targetApi="31">
         <activity
+            android:name=".View.PaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.ProductDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.ProductByCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Product.EditProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Product.AddProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.ThongTinTaiKhoanActivity"
+            android:exported="false" />
+        <activity
             android:name=".View.TrangChuActivity"
             android:exported="false" />
         <activity
