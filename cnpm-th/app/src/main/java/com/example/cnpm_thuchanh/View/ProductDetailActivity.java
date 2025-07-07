@@ -17,6 +17,7 @@ import com.example.cnpm_thuchanh.R;
 import com.example.cnpm_thuchanh.Session.UserSession;
 
 import java.io.File;
+import java.text.DecimalFormat;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
@@ -47,7 +48,11 @@ public class ProductDetailActivity extends AppCompatActivity {
         if (product != null) {
             txtName.setText(product.getName());
             txtDesc.setText(product.getDescription());
-            txtPrice.setText(String.format("%.0f VNĐ", product.getPrice()));
+
+            // Định dạng giá tiền có dấu chấm ngăn cách
+            DecimalFormat formatter = new DecimalFormat("#,###");
+            String formattedPrice = formatter.format(product.getPrice());
+            txtPrice.setText(formattedPrice + " VNĐ");
 
             File imgFile = new File(product.getImagePath());
             if (imgFile.exists()) {

@@ -21,6 +21,7 @@ import com.example.cnpm_thuchanh.Model.CartItem;
 import com.example.cnpm_thuchanh.R;
 import com.example.cnpm_thuchanh.Session.UserSession;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class PaymentActivity extends AppCompatActivity {
@@ -57,7 +58,13 @@ public class PaymentActivity extends AppCompatActivity {
                 total += item.getQuantity() * item.getProduct().getPrice();
             }
         }
-        txtMessage.setText("Tổng tiền: " + String.format("%.0f VNĐ", total));
+
+
+
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        String formattedTotal = formatter.format(total);
+        txtMessage.setText("Tổng tiền: " + formattedTotal + " VNĐ");
+
 
         // Spinner phương thức thanh toán
         String[] methods = {"Tiền mặt", "Chuyển khoản", "Momo", "ZaloPay"};

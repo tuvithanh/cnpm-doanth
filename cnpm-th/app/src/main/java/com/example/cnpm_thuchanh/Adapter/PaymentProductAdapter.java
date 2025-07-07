@@ -14,6 +14,7 @@ import com.example.cnpm_thuchanh.Model.CartItem;
 import com.example.cnpm_thuchanh.R;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class PaymentProductAdapter extends RecyclerView.Adapter<PaymentProductAdapter.ViewHolder> {
@@ -48,7 +49,10 @@ public class PaymentProductAdapter extends RecyclerView.Adapter<PaymentProductAd
         CartItem item = cartItems.get(position);
         if (item.getProduct() != null) {
             holder.txtProductName.setText(item.getProduct().getName());
-            holder.txtProductPrice.setText(String.format("%.0f VNĐ", item.getProduct().getPrice()));
+            DecimalFormat formatter = new DecimalFormat("#,###");
+            String formattedPrice = formatter.format(item.getProduct().getPrice());
+            holder.txtProductPrice.setText(formattedPrice + " VNĐ");
+
             holder.txtQuantity.setText("Số lượng: " + item.getQuantity());
 
             // Load ảnh từ đường dẫn (nếu có)

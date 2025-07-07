@@ -1,6 +1,5 @@
 package com.example.cnpm_thuchanh.Adapter;
 
-
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -17,6 +16,7 @@ import com.example.cnpm_thuchanh.R;
 import com.example.cnpm_thuchanh.View.ProductDetailActivity;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class ProductHomeAdapter extends RecyclerView.Adapter<ProductHomeAdapter.ProductViewHolder> {
@@ -40,7 +40,12 @@ public class ProductHomeAdapter extends RecyclerView.Adapter<ProductHomeAdapter.
         Product p = productList.get(position);
         holder.txtName.setText(p.getName());
         holder.txtDesc.setText(p.getDescription());
-        holder.txtPrice.setText(String.format("%.0f VNĐ", p.getPrice()));
+
+        // Định dạng tiền có dấu chấm ngăn cách: 100.000 VNĐ
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        String formattedPrice = formatter.format(p.getPrice());
+        holder.txtPrice.setText(formattedPrice + " VNĐ");
+
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), ProductDetailActivity.class);
             intent.putExtra("product", p);
@@ -53,8 +58,6 @@ public class ProductHomeAdapter extends RecyclerView.Adapter<ProductHomeAdapter.
         } else {
             holder.imgProduct.setImageResource(R.drawable.ic_image_placeholder);
         }
-
-        // Bạn có thể thêm click nếu muốn
     }
 
     @Override
@@ -75,4 +78,3 @@ public class ProductHomeAdapter extends RecyclerView.Adapter<ProductHomeAdapter.
         }
     }
 }
-

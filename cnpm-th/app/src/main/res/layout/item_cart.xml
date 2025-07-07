@@ -93,10 +93,14 @@
             <Button
                 android:id="@+id/btnDeleteCart"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:text="Xóa"
-                android:textColor="@android:color/holo_red_dark"
-                android:layout_marginTop="8dp" />
+                android:textColor="@android:color/white"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginStart="12dp"
+                android:drawablePadding="6dp" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

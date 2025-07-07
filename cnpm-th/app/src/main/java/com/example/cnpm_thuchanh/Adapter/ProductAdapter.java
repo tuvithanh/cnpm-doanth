@@ -13,6 +13,7 @@ import com.example.cnpm_thuchanh.Model.Product;
 import com.example.cnpm_thuchanh.R;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
@@ -43,7 +44,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product p = list.get(position);
         holder.txtName.setText(p.getName());
-        holder.txtPrice.setText(String.format("%.0f VNĐ", p.getPrice()));
+
+
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        String formattedPrice = formatter.format(p.getPrice());
+        holder.txtPrice.setText(formattedPrice + " VNĐ");
+
         holder.txtDesc.setText(p.getDescription());
 
         File imgFile = new File(p.getImagePath());

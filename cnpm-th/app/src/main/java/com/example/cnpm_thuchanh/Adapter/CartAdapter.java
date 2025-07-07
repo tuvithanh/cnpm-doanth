@@ -1,5 +1,7 @@
 package com.example.cnpm_thuchanh.Adapter;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import com.example.cnpm_thuchanh.Model.Product;
 import com.example.cnpm_thuchanh.R;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
@@ -42,7 +45,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         Product p = item.getProduct();
 
         holder.txtName.setText(p.getName());
-        holder.txtPrice.setText(String.format("%.0f VNĐ", p.getPrice()));
+
+        // Định dạng giá tiền: 100.000 VNĐ
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        String formattedPrice = formatter.format(p.getPrice());
+        holder.txtPrice.setText(formattedPrice + " VNĐ");
+
         holder.txtQuantity.setText(String.valueOf(item.getQuantity()));
 
         File imgFile = new File(p.getImagePath());
@@ -63,14 +71,34 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 item.setQuantity(item.getQuantity() - 1);
                 cartItemDao.updateQuantity(item.getId(), item.getQuantity());
                 notifyItemChanged(position);
+            } else {
+                // Nếu số lượng = 1, hỏi người dùng có muốn xóa không
+                new AlertDialog.Builder(holder.itemView.getContext())
+                        .setTitle("Xác nhận")
+                        .setMessage("Bạn có muốn xóa sản phẩm này khỏi giỏ hàng không?")
+                        .setPositiveButton("Xóa", (dialog, which) -> {
+                            cartItemDao.deleteItem(item.getId());
+                            cartItems.remove(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, cartItems.size());
+                        })
+                        .setNegativeButton("Hủy", null)
+                        .show();
             }
         });
 
         holder.btnDelete.setOnClickListener(v -> {
-            cartItemDao.deleteItem(item.getId());
-            cartItems.remove(position);
-            notifyItemRemoved(position);
-            notifyItemRangeChanged(position, cartItems.size());
+            new AlertDialog.Builder(holder.itemView.getContext())
+                    .setTitle("Xác nhận")
+                    .setMessage("Bạn có chắc chắn muốn xóa sản phẩm này?")
+                    .setPositiveButton("Xóa", (dialog, which) -> {
+                        cartItemDao.deleteItem(item.getId());
+                        cartItems.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, cartItems.size());
+                    })
+                    .setNegativeButton("Hủy", null)
+                    .show();
         });
     }
 

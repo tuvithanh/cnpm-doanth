@@ -18,6 +18,7 @@ import com.example.cnpm_thuchanh.Model.CartItem;
 import com.example.cnpm_thuchanh.R;
 import com.example.cnpm_thuchanh.Session.UserSession;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +61,9 @@ public class CartActivity extends AppCompatActivity {
                 total += item.getQuantity() * item.getProduct().getPrice();
             }
         }
-        txtTotalPrice.setText(String.format("Tổng tiền: %.0f VNĐ", total));
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        String formattedTotal = formatter.format(total);
+        txtTotalPrice.setText("Tổng tiền: " + formattedTotal + " VNĐ");
 
         // Set Adapter cho RecyclerView
         CartAdapter adapter = new CartAdapter(cartItems, cartItemDao);
