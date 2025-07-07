@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace = "com.example.cnpm_thuchanh"
-    compileSdk = 35
+    compileSdk = 35   // ✅ cập nhật từ 34 lên 35
 
     defaultConfig {
         applicationId = "com.example.cnpm_thuchanh"
-        minSdk = 35
-        targetSdk = 35
+        minSdk = 26
+        targetSdk = 35 // ✅ nên khớp với compileSdk
         versionCode = 1
         versionName = "1.0"
 

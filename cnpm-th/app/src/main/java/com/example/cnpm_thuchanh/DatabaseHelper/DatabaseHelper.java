@@ -5,59 +5,100 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-
-    private static final String DATABASE_NAME = "shop.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final String DB_NAME = "shop.db";
+    private static final int DB_VERSION = 2;
 
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, DB_NAME, null, DB_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Tạo bảng Category
+        // Bảng User
+        db.execSQL("CREATE TABLE User (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "name TEXT NOT NULL," +
+                "phone INTEGER NOT NULL," +
+                "username TEXT NOT NULL," +
+                "password TEXT NOT NULL," +
+                "email TEXT NOT NULL," +
+                "address TEXT NOT NULL," +
+                "about TEXT NOT NULL," +
+                "role TEXT NOT NULL," +
+                "favorites TEXT)");
+
+        // Bảng Category
         db.execSQL("CREATE TABLE Category (" +
-                "id INTEGER PRIMARY KEY," +
-                "name NVARCHAR(20) NOT NULL" +
-                ");");
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "name TEXT NOT NULL)");
 
-        // Tạo bảng Product
+        // Bảng Product
         db.execSQL("CREATE TABLE Product (" +
-                "id INTEGER PRIMARY KEY," +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "cateid INTEGER NOT NULL," +
-                "name NVARCHAR(40) NOT NULL," +
-                "description NVARCHAR(40) NOT NULL," +
-                "price DECIMAL(10,2) NOT NULL," +
-                "imagepath VARCHAR(255)," +
-                "FOREIGN KEY (cateid) REFERENCES Category(id)" +
-                ");");
+                "name TEXT NOT NULL," +
+                "description TEXT NOT NULL," +
+                "price REAL NOT NULL," +
+                "imagepath TEXT," +
+                "FOREIGN KEY (cateid) REFERENCES Category(id))");
 
-        // Tạo bảng Cart
+        // Bảng Cart
         db.execSQL("CREATE TABLE Cart (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "user_id INTEGER," +
-                "created_at DATETIME DEFAULT CURRENT_TIMESTAMP" +
-                ");");
+                "created_at TEXT DEFAULT CURRENT_TIMESTAMP)");
 
-        // Tạo bảng CartItem
+        // Bảng CartItem
         db.execSQL("CREATE TABLE CartItem (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "cart_id INTEGER," +
                 "product_id INTEGER," +
                 "quantity INTEGER," +
                 "FOREIGN KEY (cart_id) REFERENCES Cart(id)," +
-                "FOREIGN KEY (product_id) REFERENCES Product(id)" +
-                ");");
+                "FOREIGN KEY (product_id) REFERENCES Product(id))");
+
+        // Bảng Order
+        db.execSQL("CREATE TABLE `Order` (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "user_id INTEGER NOT NULL," +
+                "created_at TEXT DEFAULT CURRENT_TIMESTAMP," +
+                "status TEXT DEFAULT 'Chờ xử lý'," +
+                "total REAL NOT NULL," +
+                "FOREIGN KEY (user_id) REFERENCES User(id))");
+
+        // Bảng OrderDetail
+        db.execSQL("CREATE TABLE OrderDetail (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "order_id INTEGER NOT NULL," +
+                "product_id INTEGER NOT NULL," +
+                "quantity INTEGER NOT NULL," +
+                "price REAL NOT NULL," +
+                "FOREIGN KEY (order_id) REFERENCES `Order`(id)," +
+                "FOREIGN KEY (product_id) REFERENCES Product(id))");
+
+        // Bảng Payment
+        db.execSQL("CREATE TABLE Payment (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "order_id INTEGER NOT NULL," +
+                "payment_method TEXT," +
+                "paid_at TEXT DEFAULT CURRENT_TIMESTAMP," +
+                "amount REAL NOT NULL," +
+                "status TEXT DEFAULT 'Đã thanh toán'," +
+                "FOREIGN KEY (order_id) REFERENCES `Order`(id))");
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Xóa nếu đã tồn tại
+    public void onUpgrade(SQLiteDatabase db, int oldVer, int newVer) {
+        db.execSQL("DROP TABLE IF EXISTS Payment");
+        db.execSQL("DROP TABLE IF EXISTS OrderDetail");
+        db.execSQL("DROP TABLE IF EXISTS `Order`");
         db.execSQL("DROP TABLE IF EXISTS CartItem");
         db.execSQL("DROP TABLE IF EXISTS Cart");
         db.execSQL("DROP TABLE IF EXISTS Product");
         db.execSQL("DROP TABLE IF EXISTS Category");
+        db.execSQL("DROP TABLE IF EXISTS User");
         onCreate(db);
     }
 }
+
 

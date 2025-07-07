@@ -33,8 +33,7 @@ public class CategoryDao {
 
     public void insert(Category category) {
         ContentValues values = new ContentValues();
-        values.put("id", category.getId());
-        values.put("name", category.getName());
+        values.put("name", category.getName());  // ✅ Không cần ID
         db.insert("Category", null, values);
     }
 
@@ -48,4 +47,5 @@ public class CategoryDao {
         db.delete("Category", "id=?", new String[]{String.valueOf(id)});
     }
 }
+
 

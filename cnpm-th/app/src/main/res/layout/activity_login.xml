@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:padding="24dp"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <EditText android:id="@+id/edtUsername" android:hint="Tên đăng nhập"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+    <EditText android:id="@+id/edtPassword" android:hint="Mật khẩu"
+        android:inputType="textPassword"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+    <CheckBox
+        android:id="@+id/chkRemember"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ghi nhớ tôi" />
+
+    <Button android:id="@+id/btnLogin" android:text="Đăng nhập"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+    <Button android:id="@+id/btnGoRegister" android:text="Đăng ký"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+</LinearLayout>
