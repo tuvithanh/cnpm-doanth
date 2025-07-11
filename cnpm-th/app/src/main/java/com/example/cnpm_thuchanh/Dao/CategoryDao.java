@@ -46,6 +46,7 @@ public class CategoryDao {
     public void delete(int id) {
         db.delete("Category", "id=?", new String[]{String.valueOf(id)});
     }
+
 }
 
 

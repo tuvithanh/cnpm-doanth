@@ -9,6 +9,9 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.cnpm_thuchanh.DatabaseHelper.DatabaseHelper;
 import com.example.cnpm_thuchanh.Model.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserDao {
     private SQLiteDatabase db;
 
@@ -85,6 +88,54 @@ public class UserDao {
         c.close();
         return null;
     }
+    public List<User> getAllUsers() {
+        List<User> list = new ArrayList<>();
+        Cursor c = db.rawQuery("SELECT * FROM User", null);
+        while (c.moveToNext()) {
+            User u = new User();
+            u.setId(c.getInt(c.getColumnIndexOrThrow("id")));
+            u.setUsername(c.getString(c.getColumnIndexOrThrow("username")));
+            u.setPassword(c.getString(c.getColumnIndexOrThrow("password")));
+            u.setEmail(c.getString(c.getColumnIndexOrThrow("email")));
+            u.setName(c.getString(c.getColumnIndexOrThrow("name")));
+            list.add(u);
+        }
+        c.close();
+        return list;
+    }
+
+    public void delete(int id) {
+        db.delete("User", "id=?", new String[]{String.valueOf(id)});
+    }
+    public void update(User user) {
+        ContentValues values = new ContentValues();
+        values.put("name", user.getName());
+        values.put("password", user.getPassword());
+        values.put("email", user.getEmail());
+        db.update("User", values, "id=?", new String[]{String.valueOf(user.getId())});
+    }
+    public List<User> getAll() {
+        List<User> list = new ArrayList<>();
+        Cursor c = db.rawQuery("SELECT * FROM User", null);
+        while (c.moveToNext()) {
+            User user = new User();
+            user.setId(c.getInt(c.getColumnIndexOrThrow("id")));
+            user.setName(c.getString(c.getColumnIndexOrThrow("name")));
+            user.setUsername(c.getString(c.getColumnIndexOrThrow("username")));
+            user.setPassword(c.getString(c.getColumnIndexOrThrow("password")));
+            user.setEmail(c.getString(c.getColumnIndexOrThrow("email")));
+            user.setPhone(c.getInt(c.getColumnIndexOrThrow("phone")));
+            user.setAddress(c.getString(c.getColumnIndexOrThrow("address")));
+            user.setAbout(c.getString(c.getColumnIndexOrThrow("about")));
+            user.setRole(c.getString(c.getColumnIndexOrThrow("role")));
+            user.setFavorites(c.getString(c.getColumnIndexOrThrow("favorites")));
+            list.add(user);
+        }
+        c.close();
+        return list;
+    }
+
+
 
 
 

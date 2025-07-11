@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cnpm_thuchanh.Adapter.CategoryWithProductsAdapter;
 import com.example.cnpm_thuchanh.Admin.Category.QLCategoryActivity;
 import com.example.cnpm_thuchanh.Admin.Product.QLProductActivity;
+import com.example.cnpm_thuchanh.Admin.User.QLUserActivity;
 import com.example.cnpm_thuchanh.Dao.CategoryDao;
 import com.example.cnpm_thuchanh.Model.Category;
 import com.example.cnpm_thuchanh.R;
@@ -91,7 +92,7 @@ public class TrangChuActivity extends AppCompatActivity {
             } else if (id == R.id.nav_product) {
                 startActivity(new Intent(this, QLProductActivity.class));
             } else if (id == R.id.nav_qluser) {
-                Toast.makeText(this, "Quản lý Users", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, QLUserActivity.class));
             } else if (id == R.id.nav_logout) {
                 session.clear();
                 startActivity(new Intent(this, LoginActivity.class));
