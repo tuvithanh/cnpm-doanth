@@ -1,32 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Nhóm các menu chính -->
+    <!-- Header với thông tin user -->
+    <item
+        android:id="@+id/nav_header"
+        android:title=""
+        android:enabled="false"
+        app:actionLayout="@layout/nav_header"
+        app:showAsAction="always" />
+
+    <!-- Nhóm menu chính -->
     <group android:id="@+id/group_main">
         <item
             android:id="@+id/nav_trangchu"
-            android:title="Trang chủ" />
-        <item
-            android:id="@+id/nav_taikhoan"
-            android:title="Tài khoản" />
+            android:icon="@drawable/ic_home"
+            android:title="Trang chủ"
+            app:showAsAction="ifRoom" />
+
         <item
             android:id="@+id/nav_sanpham"
-            android:title="Sản phẩm" />
-    </group>
-    <group android:id="@+id/group_main">
-        ...
-        <item android:id="@+id/nav_qlcategory" android:title="Quản lý category" />
-        <item android:id="@+id/nav_product" android:title="Quản lý sản phẩm" />
-        <item android:id="@+id/nav_qluser" android:title="Quản lý Users" />
+            android:icon="@drawable/ic_shopping"
+            android:title="Sản phẩm"
+            app:showAsAction="ifRoom" />
+
+        <item
+            android:id="@+id/nav_taikhoan"
+            android:icon="@drawable/ic_account"
+            android:title="Tài khoản"
+            app:showAsAction="ifRoom" />
     </group>
 
-    <!-- Divider tự động -->
+    <!-- Nhóm menu quản trị (chỉ hiển thị khi có quyền) -->
+    <group
+        android:id="@+id/group_admin"
+        android:visible="false"
+        android:checkableBehavior="single">
 
-    <!-- Nhóm chứa Đăng xuất -->
+        <item
+            android:id="@+id/nav_qlcategory"
+            android:icon="@drawable/ic_category"
+            android:title="Quản lý danh mục" />
+
+        <item
+            android:id="@+id/nav_product"
+            android:icon="@drawable/ic_products"
+            android:title="Quản lý sản phẩm" />
+
+        <item
+            android:id="@+id/nav_qluser"
+            android:icon="@drawable/ic_users"
+            android:title="Quản lý người dùng" />
+    </group>
+
+    <!-- Menu đăng xuất -->
     <group android:id="@+id/group_logout">
         <item
             android:id="@+id/nav_logout"
-            android:title="Đăng xuất" />
+            android:icon="@drawable/ic_logout"
+            android:title="Đăng xuất"
+            app:showAsAction="never" />
     </group>
-
 </menu>

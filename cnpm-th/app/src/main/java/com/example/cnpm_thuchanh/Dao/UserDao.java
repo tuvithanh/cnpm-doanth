@@ -107,13 +107,17 @@ public class UserDao {
     public void delete(int id) {
         db.delete("User", "id=?", new String[]{String.valueOf(id)});
     }
-    public void update(User user) {
+    public boolean update(User user) {
         ContentValues values = new ContentValues();
         values.put("name", user.getName());
-        values.put("password", user.getPassword());
         values.put("email", user.getEmail());
-        db.update("User", values, "id=?", new String[]{String.valueOf(user.getId())});
+        values.put("phone", user.getPhone());
+        values.put("address", user.getAddress());
+
+        int result = db.update("User", values, "username = ?", new String[]{user.getUsername()});
+        return result > 0;
     }
+
     public List<User> getAll() {
         List<User> list = new ArrayList<>();
         Cursor c = db.rawQuery("SELECT * FROM User", null);

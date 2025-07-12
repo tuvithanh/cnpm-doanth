@@ -3,4 +3,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="purple_500">#6200EE</color>
+    <color name="primary_color">#6200EE</color>
+    <color name="red_500">#F44336</color>
+    <color name="primaryColor">#6200EE</color>
+    <color name="primaryTextColor">#212121</color>
+    <color name="secondaryTextColor">#757575</color>
+    <color name="dividerColor">#E0E0E0</color>
+
+    <color name="nav_item_tint">#FFFFFF</color> <!-- Hoặc chọn màu phù hợp với giao diện -->
+
 </resources>

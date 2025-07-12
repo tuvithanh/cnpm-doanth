@@ -79,7 +79,7 @@ public class TrangChuActivity extends AppCompatActivity {
             int id = item.getItemId();
 
             if (id == R.id.nav_trangchu) {
-                Toast.makeText(this, "Trang chủ", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, TrangChuActivity.class));
             } else if (id == R.id.nav_taikhoan) {
                 if (session.isLoggedIn()) {
                     startActivity(new Intent(this, ThongTinTaiKhoanActivity.class));
@@ -87,6 +87,7 @@ public class TrangChuActivity extends AppCompatActivity {
                     Toast.makeText(this, "Vui lòng đăng nhập trước", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(this, LoginActivity.class));
                 }
+
             } else if (id == R.id.nav_qlcategory) {
                 startActivity(new Intent(this, QLCategoryActivity.class));
             } else if (id == R.id.nav_product) {
@@ -98,6 +99,10 @@ public class TrangChuActivity extends AppCompatActivity {
                 startActivity(new Intent(this, LoginActivity.class));
                 finish();
             }
+            else if (id == R.id.nav_sanpham) {
+                startActivity(new Intent(this, ProductViewActivity.class));
+            }
+
 
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
