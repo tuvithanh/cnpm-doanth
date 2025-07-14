@@ -52,6 +52,15 @@
             android:id="@+id/nav_qluser"
             android:icon="@drawable/ic_users"
             android:title="Quản lý người dùng" />
+        <item
+            android:id="@+id/nav_qlhoadon"
+            android:icon="@drawable/ic_invoice"
+            android:title="Quản lý hoá đơn" />
+        <item
+            android:id="@+id/nav_thongkesanpham"
+            android:icon="@drawable/ic_thongke"
+            android:title="Thống kê sản phẩm" />
+
     </group>
 
     <!-- Menu đăng xuất -->

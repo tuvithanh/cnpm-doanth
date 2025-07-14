@@ -110,6 +110,28 @@ public class ProductDao {
         c.close();
         return list;
     }
+    public List<Product> getTopSellingProducts(int limit) {
+        List<Product> list = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT * FROM Product ORDER BY sold_quantity DESC LIMIT ?",
+                new String[]{String.valueOf(limit)}
+        );
+
+        if (cursor.moveToFirst()) {
+            do {
+                Product product = new Product();
+                product.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
+                product.setName(cursor.getString(cursor.getColumnIndexOrThrow("name")));
+                product.setSoldQuantity(cursor.getInt(cursor.getColumnIndexOrThrow("sold_quantity")));
+                list.add(product);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return list;
+    }
+
 
 
 

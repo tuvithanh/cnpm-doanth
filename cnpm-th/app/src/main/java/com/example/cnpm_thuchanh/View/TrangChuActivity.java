@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cnpm_thuchanh.Adapter.CategoryWithProductsAdapter;
 import com.example.cnpm_thuchanh.Admin.Category.QLCategoryActivity;
+import com.example.cnpm_thuchanh.Admin.Order.QLHoaDonActivity;
 import com.example.cnpm_thuchanh.Admin.Product.QLProductActivity;
 import com.example.cnpm_thuchanh.Admin.User.QLUserActivity;
 import com.example.cnpm_thuchanh.Dao.CategoryDao;
@@ -63,6 +64,8 @@ public class TrangChuActivity extends AppCompatActivity {
             navigationView.getMenu().findItem(R.id.nav_qlcategory).setVisible(true);
             navigationView.getMenu().findItem(R.id.nav_product).setVisible(true);
             navigationView.getMenu().findItem(R.id.nav_qluser).setVisible(true);
+            navigationView.getMenu().findItem(R.id.nav_qlhoadon).setVisible(true);
+            navigationView.getMenu().findItem(R.id.nav_thongkesanpham).setVisible(true);
         }
 
         // Toggle mở/đóng menu
@@ -102,6 +105,13 @@ public class TrangChuActivity extends AppCompatActivity {
             else if (id == R.id.nav_sanpham) {
                 startActivity(new Intent(this, ProductViewActivity.class));
             }
+            else if (id == R.id.nav_qlhoadon) {
+                startActivity(new Intent(this, QLHoaDonActivity.class)); //
+            }
+            else if (id == R.id.nav_thongkesanpham) {
+                startActivity(new Intent(this, ThongKeActivity.class)); //
+            }
+
 
 
             drawerLayout.closeDrawer(GravityCompat.START);

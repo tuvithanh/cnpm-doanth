@@ -50,10 +50,19 @@ public class CheckoutHelper {
         int orderId = orderDao.insertOrder(userId, total);
         if (orderId == -1) return false;
 
-        // Tạo order detail
+        // Tạo order detail + cập nhật sold_quantity
         for (CartItem item : cartItems) {
-            orderDetailDao.insertOrderDetail(orderId, item.getProduct().getId(), item.getQuantity(), item.getProduct().getPrice());
+            int productId = item.getProduct().getId();
+            int quantity = item.getQuantity();
+            double price = item.getProduct().getPrice();
+
+            // 1. Thêm chi tiết đơn hàng
+            orderDetailDao.insertOrderDetail(orderId, productId, quantity, price);
+
+            // 2. Cập nhật sold_quantity
+            updateSoldQuantity(productId, quantity);
         }
+
 
         // Tạo payment
         paymentDao.insertPayment(orderId, paymentMethod, total);
@@ -64,5 +73,20 @@ public class CheckoutHelper {
         Toast.makeText(context, "Thanh toán thành công!", Toast.LENGTH_SHORT).show();
         return true;
     }
+    private void updateSoldQuantity(int productId, int quantity) {
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        try {
+            dbHelper.getWritableDatabase().execSQL(
+                    "UPDATE Product SET sold_quantity = IFNULL(sold_quantity, 0) + ? WHERE id = ?",
+                    new Object[]{quantity, productId}
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(context, "Lỗi cập nhật thống kê sản phẩm", Toast.LENGTH_SHORT).show();
+        } finally {
+            dbHelper.close();
+        }
+    }
+
 }
 

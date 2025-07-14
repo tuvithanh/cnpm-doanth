@@ -9,7 +9,9 @@ public class Product implements Serializable {
     private String description;
     private double price;
     private String imagePath;
-    public  Product(){};
+    private int soldQuantity;
+
+    public  Product(){}
     public Product(int id, int cateId, String name, String description, double price, String imagePath) {
         this.id = id;
         this.cateId = cateId;
@@ -19,6 +21,9 @@ public class Product implements Serializable {
         this.imagePath = imagePath;
     }
 
+    public int getSoldQuantity() {
+        return soldQuantity;
+    }
     // Getters & setters
     public int getId() { return id; }
     public int getCateId() { return cateId; }
@@ -30,6 +35,9 @@ public class Product implements Serializable {
     public void setId(int id) { this.id = id; }
     public void setCateId(int cateId) { this.cateId = cateId; }
     public void setName(String name) { this.name = name; }
+    public void setSoldQuantity(int soldQuantity) {
+        this.soldQuantity = soldQuantity;
+    }
     public void setDescription(String description) { this.description = description; }
     public void setPrice(double price) { this.price = price; }
     public void setImagePath(String imagePath) { this.imagePath = imagePath; }

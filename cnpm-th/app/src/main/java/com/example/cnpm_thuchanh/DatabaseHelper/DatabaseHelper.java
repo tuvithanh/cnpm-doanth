@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "shop.db";
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 3;
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -40,6 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "description TEXT NOT NULL," +
                 "price REAL NOT NULL," +
                 "imagepath TEXT," +
+                "sold_quantity INTEGER DEFAULT 0," +
                 "FOREIGN KEY (cateid) REFERENCES Category(id))");
 
         // Bảng Cart
@@ -89,15 +90,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVer, int newVer) {
-        db.execSQL("DROP TABLE IF EXISTS Payment");
-        db.execSQL("DROP TABLE IF EXISTS OrderDetail");
-        db.execSQL("DROP TABLE IF EXISTS `Order`");
-        db.execSQL("DROP TABLE IF EXISTS CartItem");
-        db.execSQL("DROP TABLE IF EXISTS Cart");
-        db.execSQL("DROP TABLE IF EXISTS Product");
-        db.execSQL("DROP TABLE IF EXISTS Category");
-        db.execSQL("DROP TABLE IF EXISTS User");
-        onCreate(db);
+        if (oldVer < 3) {
+            db.execSQL("ALTER TABLE Product ADD COLUMN sold_quantity INTEGER DEFAULT 0");
+        }
     }
 }
 

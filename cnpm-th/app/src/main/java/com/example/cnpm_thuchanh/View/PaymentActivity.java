@@ -1,6 +1,7 @@
 package com.example.cnpm_thuchanh.View;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,8 +17,10 @@ import com.example.cnpm_thuchanh.Adapter.PaymentProductAdapter;
 import com.example.cnpm_thuchanh.Dao.CartDao;
 import com.example.cnpm_thuchanh.Dao.CartItemDao;
 import com.example.cnpm_thuchanh.DatabaseHelper.CheckoutHelper;
+import com.example.cnpm_thuchanh.DatabaseHelper.DatabaseHelper;
 import com.example.cnpm_thuchanh.Model.Cart;
 import com.example.cnpm_thuchanh.Model.CartItem;
+import com.example.cnpm_thuchanh.Model.Product;
 import com.example.cnpm_thuchanh.R;
 import com.example.cnpm_thuchanh.Session.UserSession;
 
@@ -84,6 +87,24 @@ public class PaymentActivity extends AppCompatActivity {
 
             if (success) {
                 Toast.makeText(this, "Thanh toán thành công với " + method, Toast.LENGTH_SHORT).show();
+
+                // Lấy lại cart item list
+                Cart cart1 = new CartDao(this).getOrCreateCart(userId);
+                List<CartItem> cartItemList = new CartItemDao(this).getItemsByCartId(cart1.getId());
+                DatabaseHelper dbHelper = new DatabaseHelper(this);
+
+                for (CartItem item : cartItemList) {
+                    Product product = item.getProduct();
+                    if (product != null) {
+                        int productId = product.getId();
+                        int quantity = item.getQuantity();
+
+                        SQLiteDatabase db = dbHelper.getWritableDatabase();
+                        db.execSQL("UPDATE Product SET sold_quantity = IFNULL(sold_quantity, 0) + ? WHERE id = ?",
+                                new Object[]{quantity, productId});
+                    }
+                }
+
                 Intent intent = new Intent(this, TrangChuActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
@@ -91,6 +112,7 @@ public class PaymentActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Thanh toán thất bại!", Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 }

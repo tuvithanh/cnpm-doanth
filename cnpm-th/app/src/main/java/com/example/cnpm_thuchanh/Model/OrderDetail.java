@@ -9,6 +9,7 @@ public class OrderDetail implements Serializable {
     private int quantity;
     private double price;
 
+    public OrderDetail(){}
     public OrderDetail(int id, int orderId, int productId, int quantity, double price) {
         this.id = id;
         this.orderId = orderId;

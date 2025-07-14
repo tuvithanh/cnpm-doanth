@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.cnpm_thuchanh.DatabaseHelper.DatabaseHelper;
 import com.example.cnpm_thuchanh.Model.Order;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OrderDao {
     private final SQLiteDatabase db;
 
@@ -39,4 +42,28 @@ public class OrderDao {
         }
         return null;
     }
+    // Lấy danh sách tất cả hoá đơn
+    public List<Order> getAllOrders() {
+        List<Order> list = new ArrayList<>();
+        Cursor c = db.rawQuery("SELECT * FROM `Order`", null);
+        while (c.moveToNext()) {
+            Order order = new Order();
+            order.setId(c.getInt(c.getColumnIndexOrThrow("id")));
+            order.setUserId(c.getInt(c.getColumnIndexOrThrow("user_id")));
+            order.setCreatedAt(c.getString(c.getColumnIndexOrThrow("created_at")));
+            order.setStatus(c.getString(c.getColumnIndexOrThrow("status")));
+            order.setTotal(c.getDouble(c.getColumnIndexOrThrow("total")));
+            list.add(order);
+        }
+        c.close();
+        return list;
+    }
+
+    // Xoá hoá đơn
+    public void deleteOrder(int orderId) {
+        db.delete("OrderDetail", "order_id=?", new String[]{String.valueOf(orderId)}); // Xoá chi tiết trước
+        db.delete("Payment", "order_id=?", new String[]{String.valueOf(orderId)});     // Xoá thanh toán
+        db.delete("`Order`", "id=?", new String[]{String.valueOf(orderId)});           // Xoá hoá đơn
+    }
+
 }
